@@ -2,8 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const taskApi = createApi({
   reducerPath: "taskApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000" }),
-  tagTypes: ["Task"], // 🟢 ক্যাশ ম্যানেজমেন্টের জন্য ট্যাগ যোগ করলাম
+//   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://blood-donation-server-cjv32ggog-shah-aloms-projects.vercel.app" }),
+  tagTypes: ["Task"], 
   endpoints: (builder) => ({
     getTasks: builder.query({
       query: () => "/tasks",
@@ -24,17 +25,17 @@ export const taskApi = createApi({
     updateTask: builder.mutation({
       query: ({ id, ...updatedTask }) => ({
         url: `/tasks/${id}`,
-        method: "PUT",
+        method: "PATCH",
         body: updatedTask,
       }),
-      invalidatesTags: ["Task"], // 🟢 আপডেট হলে ক্যাশ রিফ্রেশ হবে
+      invalidatesTags: ["Task"], 
     }),
     deleteTask: builder.mutation({
       query: (id) => ({
         url: `/tasks/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Task"], // 🟢 ডিলিট করলে UI রিফ্রেশ হবে
+      invalidatesTags: ["Task"],
     }),
   }),
 });
