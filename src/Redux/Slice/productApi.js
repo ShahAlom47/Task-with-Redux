@@ -2,9 +2,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const taskApi = createApi({
   reducerPath: "taskApi",
-//   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000" }),
-  baseQuery: fetchBaseQuery({ baseUrl: "https://blood-donation-server-cjv32ggog-shah-aloms-projects.vercel.app" }),
-  tagTypes: ["Task"], 
+  //   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://blood-donation-server-zeta.vercel.app",
+  }),
+  tagTypes: ["Task"],
   endpoints: (builder) => ({
     getTasks: builder.query({
       query: () => "/tasks",
@@ -20,7 +22,7 @@ export const taskApi = createApi({
         method: "POST",
         body: newTask,
       }),
-      invalidatesTags: ["Task"], 
+      invalidatesTags: ["Task"],
     }),
     updateTask: builder.mutation({
       query: ({ id, ...updatedTask }) => ({
@@ -28,7 +30,7 @@ export const taskApi = createApi({
         method: "PATCH",
         body: updatedTask,
       }),
-      invalidatesTags: ["Task"], 
+      invalidatesTags: ["Task"],
     }),
     deleteTask: builder.mutation({
       query: (id) => ({

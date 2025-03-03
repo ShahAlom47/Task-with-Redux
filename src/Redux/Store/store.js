@@ -3,7 +3,7 @@ import { taskApi } from "../Slice/productApi";
 
 export const store = configureStore({
   reducer: {
-    [taskApi.reducerPath]: taskApi.reducer
+    [taskApi.reducerPath]: taskApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(taskApi.middleware),

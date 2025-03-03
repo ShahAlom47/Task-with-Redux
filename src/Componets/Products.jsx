@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { useAddTaskMutation, useDeleteTaskMutation, useGetTasksQuery, useUpdateTaskMutation } from "../Redux/Slice/productApi";
+import {
+  useAddTaskMutation,
+  useDeleteTaskMutation,
+  useGetTasksQuery,
+  useUpdateTaskMutation,
+} from "../Redux/Slice/productApi";
 import TaskModal from "./TaskModal";
 
 const Tasks = () => {
@@ -9,6 +14,8 @@ const Tasks = () => {
   const [deleteTask] = useDeleteTaskMutation();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+
+  console.log(tasks);
 
   const handleUpdate = (task) => {
     setSelectedTask(task);
@@ -21,7 +28,9 @@ const Tasks = () => {
   };
 
   const handleDelete = async (id) => {
-    const isConfirmed = window.confirm("Are you sure you want to delete this item?");
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this item?"
+    );
     if (!isConfirmed) return;
 
     await deleteTask(id);
@@ -32,7 +41,9 @@ const Tasks = () => {
 
   return (
     <div className="p-6 max-w-[1200px] mx-auto bg-white shadow-lg rounded-lg">
-      <h2 className="text-2xl font-bold text-center mb-4 border-b-4">Task Manager</h2>
+      <h2 className="text-2xl font-bold text-center mb-4 border-b-4">
+        Task Manager
+      </h2>
 
       <div className="flex justify-end">
         <button
@@ -44,8 +55,11 @@ const Tasks = () => {
       </div>
 
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-6 border-t-4 pt-4">
-        {tasks.map((task) => (
-          <li key={task._id} className="flex flex-col justify-between bg-gray-100 p-4 rounded shadow">
+        {tasks?.data?.map((task) => (
+          <li
+            key={task._id}
+            className="flex flex-col justify-between bg-gray-100 p-4 rounded shadow"
+          >
             <div>
               <h1 className="text-xl font-semibold mb-2">{task.title}</h1>
               <p className="text-gray-700">{task.description}</p>
