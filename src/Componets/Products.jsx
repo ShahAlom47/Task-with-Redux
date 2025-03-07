@@ -14,6 +14,7 @@ const Tasks = () => {
   const [deleteTask] = useDeleteTaskMutation();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+  const [deletingTaskId, setDeletingTaskId] = useState(null); 
 
   console.log(tasks);
 
@@ -33,7 +34,9 @@ const Tasks = () => {
     );
     if (!isConfirmed) return;
 
+    setDeletingTaskId(id); // ✅ Set the task id before deleting
     await deleteTask(id);
+    setDeletingTaskId(null); // ✅ Reset after deletion
   };
 
   if (isLoading) return <p>Loading...</p>;
@@ -74,8 +77,9 @@ const Tasks = () => {
               <button
                 className="bg-red-500 text-white px-4 py-2 rounded shadow hover:bg-red-600"
                 onClick={() => handleDelete(task._id)}
+                disabled={deletingTaskId === task._id} // ✅ Disable only the deleting task's button
               >
-                Delete
+                {deletingTaskId === task._id ? "Deleting..." : "Delete"} 
               </button>
             </div>
           </li>
